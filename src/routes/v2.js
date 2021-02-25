@@ -4,9 +4,13 @@ const fs = require('fs');
 const express = require('express');
 const Collection = require('../models/data-collection.js');
 
+const bearerAuth = require('../auth/middleware/bearer');
+const accessControl = require('../auth/middleware/acl')
+
 const router = express.Router();
 
 const models = new Map();
+
 
 router.param('model', (req, res, next) => {
   const modelName = req.params.model;
@@ -25,13 +29,14 @@ router.param('model', (req, res, next) => {
       next("Invalid Model");
     }
   }
-});
+}); 
 
-router.get('/:model', handleGetAll);
-router.get('/:model/:id', handleGetOne);
-router.post('/:model', handleCreate);
-router.put('/:model/:id', handleUpdate);
-router.delete('/:model/:id', handleDelete);
+
+router.get('/:model', bearerAuth, accessControl('user'), handleGetAll);
+router.get('/:model/:id', bearerAuth, accessControl('user'), handleGetOne);
+router.post('/:model', bearerAuth, accessControl('create'), handleCreate);
+router.put('/:model/:id', bearerAuth, accessControl('update'), handleUpdate);
+router.delete('/:model/:id', bearerAuth, accessControl('delete'), handleDelete);
 
 async function handleGetAll(req, res) {
   let allRecords = await req.model.get();

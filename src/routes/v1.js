@@ -8,6 +8,7 @@ const router = express.Router();
 
 const models = new Map();
 
+
 router.param('model', (req, res, next) => {
   const modelName = req.params.model;
   if (models.has(modelName)) {
@@ -26,6 +27,7 @@ router.param('model', (req, res, next) => {
     }
   }
 });
+
 
 router.get('/:model', handleGetAll);
 router.get('/:model/:id', handleGetOne);
