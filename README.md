@@ -11,7 +11,7 @@
 * Restricting access without a valid token AND a specific capability
 
 ## User Instructions
-- Deployed to Heroku, accessible at: []()
+- Deployed to Heroku, accessible at: [https://nmagruder-auth-api.herokuapp.com/](https://nmagruder-auth-api.herokuapp.com/)
     
 - To run tests, clone to a directory and run npm test in directory in terminal
 
